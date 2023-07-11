@@ -3,5 +3,17 @@
 @tailwind utilities;
 
 body {
-    @apply bg-slate-50;
+    @apply bg-slate-200;
+}
+
+button {
+    @apply px-3 py-1 bg-slate-800 text-white
+}
+
+button.primary {
+    @apply bg-primary-500 hover:bg-blue-800 transition-colors
+}
+
+input {
+    @apply w-full rounded px-4 text-lg outline-none
 }
