@@ -12,7 +12,7 @@ type Inputs = {
 export default AuthedLayout(function AddPartner() {
     const router = useRouter()
 
-    const partnerMutation = api.partners.addPartner.useMutation({
+    const {mutate, isLoading} = api.partners.addPartner.useMutation({
         onSuccess() {
             router.push('/partners')
         }
@@ -26,7 +26,7 @@ export default AuthedLayout(function AddPartner() {
     } = useForm<Inputs>()
 
     const onSubmit: SubmitHandler<Inputs> = async (data) => {
-        partnerMutation.mutate({
+        mutate({
             ...data
         })
     }
@@ -47,7 +47,7 @@ export default AuthedLayout(function AddPartner() {
                     <input {...register('dni')} placeholder="DNI" />
                 </div>
                 <div className="my-2 p-4 flex flex-row justify-end">
-                    <button type="submit" className="primary" value={"Crear socio"}>Crear socio </button>
+                    <button disabled={isLoading} type="submit" className="primary" value={"Crear socio"}>Crear socio </button>
                 </div>
             </form>
         </>

@@ -7,7 +7,11 @@ body {
 }
 
 button {
-    @apply px-3 py-1 bg-slate-800 text-white
+    @apply px-3 py-1 bg-slate-800 text-white rounded-lg
+}
+
+button[disabled] {
+    @apply opacity-25
 }
 
 button.primary {
@@ -15,5 +19,5 @@ button.primary {
 }
 
 input {
-    @apply w-full rounded px-4 text-lg outline-none
+    @apply w-full rounded px-4 text-lg outline-none border-black/40 border bg-slate-50
 }
