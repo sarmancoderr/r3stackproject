@@ -1,6 +1,6 @@
 import React from "react";
 
-export const AuthedLayout = (Page: React.FC<any>) => () => {
+export const AuthedLayout = (Page: React.FC<any>) => function AuthedLayout() {
     return (
         <>
             <header className="flex p-2 w-screen justify-between place-items-center bg-white">

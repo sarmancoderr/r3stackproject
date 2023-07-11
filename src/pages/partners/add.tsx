@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, type SubmitHandler } from "react-hook-form"
 import { api } from "~/utils/api"
 import { useRouter } from "next/router"
 
@@ -21,11 +23,9 @@ export default AuthedLayout(function AddPartner() {
     const {
         register,
         handleSubmit,
-        watch,
-        formState: { errors },
     } = useForm<Inputs>()
 
-    const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
         mutate({
             ...data
         })
