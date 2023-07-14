@@ -4,7 +4,7 @@ import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { api } from "~/utils/api"
 import { useRouter } from "next/router"
-import { Box, Button, Grid, TextField, Typography } from "@mui/material"
+import { Alert, Backdrop, Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material"
 
 type Inputs = {
     name: string,
@@ -15,7 +15,7 @@ type Inputs = {
 export default AuthedLayout(function AddPartner() {
     const router = useRouter()
 
-    const {mutate, isLoading} = api.partners.addPartner.useMutation({
+    const {mutate, isLoading, isError, error} = api.partners.addPartner.useMutation({
         onSuccess() {
             router.push('/partners')
         }
@@ -35,6 +35,13 @@ export default AuthedLayout(function AddPartner() {
 
     return (
         <>
+            {isError && <Alert severity="error">{error.message}</Alert>}
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={isLoading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                 <Typography variant="h6" component={'h2'}>Añadir socio</Typography>
             </Box>
