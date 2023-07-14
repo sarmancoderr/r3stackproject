@@ -4,6 +4,7 @@ import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { api } from "~/utils/api"
 import { useRouter } from "next/router"
+import { Box, Button, Grid, TextField, Typography } from "@mui/material"
 
 type Inputs = {
     name: string,
@@ -26,6 +27,7 @@ export default AuthedLayout(function AddPartner() {
     } = useForm<Inputs>()
 
     const onSubmit: SubmitHandler<Inputs> = (data) => {
+        console.log('MUTANDO', data)
         mutate({
             ...data
         })
@@ -33,23 +35,27 @@ export default AuthedLayout(function AddPartner() {
 
     return (
         <>
-            <header className="flex justify-between place-items-center">
-                <h2 className="font-bold lg:text-3xl">Añadir socio</h2>
-            </header>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="my-2">
-                    <input {...register('name')} placeholder="Nombre" />
-                </div>
-                <div className="my-2">
-                    <input {...register('surname')} placeholder="Apellidos" />
-                </div>
-                <div className="my-2">
-                    <input {...register('dni')} placeholder="DNI" />
-                </div>
-                <div className="my-2 p-4 flex flex-row justify-end">
-                    <button disabled={isLoading} type="submit" className="primary" value={"Crear socio"}>Crear socio </button>
-                </div>
-            </form>
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                <Typography variant="h6" component={'h2'}>Añadir socio</Typography>
+            </Box>
+            <Box sx={{flexGrow: 1}} component={'form'} onSubmit={handleSubmit(onSubmit)}>
+                <Grid container spacing={2}>
+                    <Grid item xs={24}>
+                        <TextField fullWidth {...register('name')} label="Nombre" />
+                    </Grid>
+                    <Grid item xs={24}>
+                        <TextField fullWidth {...register('surname')} label="Apellidos" />
+                    </Grid>
+                    <Grid item xs={24}>
+                        <TextField fullWidth {...register('dni')} label="DNI" />
+                    </Grid>
+                    <Grid item xs={24}>
+                        <Box sx={{justifyContent: 'flex-end', display: 'flex'}}>
+                            <Button type="submit" variant="contained">Guardar socio</Button>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </Box>
         </>
     )
 })
