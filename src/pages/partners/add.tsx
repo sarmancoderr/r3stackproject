@@ -5,6 +5,7 @@ import { useForm, type SubmitHandler } from "react-hook-form"
 import { api } from "~/utils/api"
 import { useRouter } from "next/router"
 import { Alert, Backdrop, Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material"
+import Head from "next/head"
 
 type Inputs = {
     name: string,
@@ -35,6 +36,9 @@ export default AuthedLayout(function AddPartner() {
 
     return (
         <>
+            <Head>
+                <title>Añadir socio | Registros</title>
+            </Head>
             {isError && <Alert severity="error">{error.message}</Alert>}
             <Backdrop
                 sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

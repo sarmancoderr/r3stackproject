@@ -1,6 +1,6 @@
 import React from "react";
 import CustomAppBar from "./CustomAppBar";
-import { Box, Container, Toolbar } from "@mui/material";
+import { Container, Toolbar } from "@mui/material";
 
 export const AuthedLayout = (Page: React.FC<any>) => function AuthedLayout() {
     return (

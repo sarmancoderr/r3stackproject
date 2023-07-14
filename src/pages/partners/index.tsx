@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { Alert, Box, Button, CircularProgress, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
+import Head from "next/head"
 import Link from "next/link"
-import { useRouter } from "next/router"
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { api } from "~/utils/api"
 
@@ -24,6 +24,9 @@ export default AuthedLayout(function Partners() {
 
     return (
         <>
+            <Head>
+                <title>Listado de socios | Registros</title>
+            </Head>
             <Box sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                 <Typography variant="h6" component={'h2'}>Listado de socios</Typography>
                 <Button LinkComponent={Link} href="/partners/add" variant="contained">Agregar socio</Button>
