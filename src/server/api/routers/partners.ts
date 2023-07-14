@@ -1,6 +1,3 @@
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
-
 import { z } from "zod";
 import {
     createTRPCRouter,
@@ -9,14 +6,14 @@ import {
 
 export const partnerRouter = createTRPCRouter({
     addPartner: publicProcedure
-        .input(z.object({ name: z.string().nonempty(), surname: z.string().nonempty(), dni: z.string().nonempty() }))
-        .mutation(async (opts) => {
-            return await prisma.partner.create({
-                data: opts.input
+        .input(z.object({ name: z.string(), surname: z.string(), dni: z.string() }))
+        .mutation(async ({ctx, input}) => {
+            return await ctx.prisma.partner.create({
+                data: input
             })
         }),
     allPartners: publicProcedure
-        .query(async () => {
-            return await prisma.partner.findMany({})
+        .query(async ({ctx}) => {
+            return await ctx.prisma.partner.findMany({})
         })
 })
