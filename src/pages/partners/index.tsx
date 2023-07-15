@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { Alert, Box, Button, CircularProgress, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
 import Head from "next/head"
 import Link from "next/link"
@@ -7,7 +6,6 @@ import { api } from "~/utils/api"
 
 export default AuthedLayout(function Partners() {
     const {data, isLoading, isError, error} = api.partners.allPartners.useQuery()
-
     if (isLoading) {
         return (
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
@@ -32,6 +30,7 @@ export default AuthedLayout(function Partners() {
                 <Button LinkComponent={Link} href="/partners/add" variant="contained">Agregar socio</Button>
             </Box>
             <List>
+                
                 {data.map((p) => (
                     <ListItem key={p.id} disablePadding>
                         <ListItemButton>
