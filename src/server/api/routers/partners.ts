@@ -2,7 +2,6 @@ import { z } from "zod";
 import {
     createTRPCRouter,
     protectedProcedure,
-    publicProcedure,
 } from "~/server/api/trpc";
 
 export const partnerRouter = createTRPCRouter({
@@ -16,5 +15,12 @@ export const partnerRouter = createTRPCRouter({
     allPartners: protectedProcedure
         .query(async ({ctx}) => {
             return await ctx.prisma.partner.findMany({})
+        }),
+    getPartner: protectedProcedure.input(z.object({id: z.string().nonempty()})).query(async ({input, ctx}) => {
+        return await ctx.prisma.partner.findUniqueOrThrow({
+            where: {
+                id: input.id
+            }
         })
+    })
 })

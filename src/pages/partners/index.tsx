@@ -1,11 +1,13 @@
 import { Alert, Box, Button, CircularProgress, List, ListItem, ListItemButton, ListItemText, Typography } from "@mui/material"
 import Head from "next/head"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { api } from "~/utils/api"
 
 export default AuthedLayout(function Partners() {
     const {data, isLoading, isError, error} = api.partners.allPartners.useQuery()
+    const router = useRouter()
     if (isLoading) {
         return (
             <Box sx={{display: 'flex', justifyContent: 'center'}}>
@@ -32,7 +34,7 @@ export default AuthedLayout(function Partners() {
             <List>
                 
                 {data.map((p) => (
-                    <ListItem key={p.id} disablePadding>
+                    <ListItem key={p.id} disablePadding onClick={() => router.push('/partners/' + p.id)}>
                         <ListItemButton>
                             <ListItemText primary={`${p.name}`} secondary={p.surname} />
                         </ListItemButton>
