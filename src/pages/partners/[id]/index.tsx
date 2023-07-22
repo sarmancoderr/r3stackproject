@@ -1,9 +1,10 @@
-import { Toolbar, Typography, TableContainer, Table, TableBody, Paper, Menu, MenuItem, Button, Box, Card, CardHeader, CardActions, CardContent } from "@mui/material"
+import { Toolbar, Typography, TableContainer, Table, TableBody, Paper, Menu, MenuItem, Button, Box, Card, CardHeader, CardActions, CardContent, Dialog, DialogTitle, DialogContent, DialogContentText } from "@mui/material"
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { useRouter } from "next/router"
 import { useState } from "react";
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
+import { ButtonActivator } from "~/components/ButtonActivator";
 import { api } from "~/utils/api"
 
 type Inputs = {
@@ -13,11 +14,13 @@ type Inputs = {
 }
 
 export default AuthedLayout(function ShowPartner() {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [partnerMenu, setPartnerMenu] = useState(false)
     const router = useRouter()
-    console.log(router.query)
     const {isLoading, isError, error, data} = api.partners.getPartner.useQuery({id: router.query.id as string})
+    const removePartner = api.partners.removePartner.useMutation({
+        onSuccess() {
+            router.push('/partners')
+        }
+    })
 
     if (isLoading) {
         return <p>Loading...</p>
@@ -26,7 +29,7 @@ export default AuthedLayout(function ShowPartner() {
     if (isError) {
         return <p>{error.message}</p>
     }
-
+    
     return (
         <>
             <Card>
@@ -44,8 +47,20 @@ export default AuthedLayout(function ShowPartner() {
                     </TableContainer>
                 </CardContent>
                 <CardActions sx={{display: 'flex', justifyContent: 'space-around'}}>
-                    <Button disableElevation variant={'contained'}>Editar</Button>
-                    <Button color={'error'} disableElevation variant={'contained'}>Eliminar</Button>
+                    <Button onClick={() => router.push(`/partners/${router.query.id}/edit`)} disableElevation variant={'contained'}>Editar</Button>
+                    <ButtonActivator
+                        Activator={({handleOpen}) => <Button variant="contained" color="error" disableElevation onClick={() => handleOpen()}>Eliminar</Button>}
+                        ContentButton={({handleClose}) => (
+                            <>
+                                <Typography sx={{textAlign: 'center'}} variant="h6">¿Estas seguro que deseas eliminar el socio?</Typography>
+                                <Button color="error" onClick={() => {
+                                    removePartner.mutate({
+                                        id: router.query.id as string
+                                    })
+                                }}>Eliminar</Button>
+                            </>
+                        )}
+                        />
                 </CardActions>
             </Card>
         </>

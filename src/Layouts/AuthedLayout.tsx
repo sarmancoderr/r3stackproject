@@ -4,8 +4,6 @@ import { Button, Card, CardContent, CardHeader, Container, Toolbar, Typography }
 import { signIn, useSession } from "next-auth/react";
 export const AuthedLayout = (Page: React.FC<any>) => function AuthedLayout() {
     const ctx = useSession()
-    console.log(ctx)
-
     if (ctx.status !== 'authenticated') {
         return (
             <Container sx={{marginTop: '20px'}}>

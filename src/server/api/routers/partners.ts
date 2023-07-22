@@ -22,5 +22,22 @@ export const partnerRouter = createTRPCRouter({
                 id: input.id
             }
         })
-    })
+    }),
+    updatePartner: protectedProcedure.input(z.object({name: z.string(), surname: z.string(), dni: z.string(), id: z.string().nonempty()}))
+        .mutation(async ({ctx, input}) => {
+            const {id, ...update} = input
+            await ctx.prisma.partner.update({
+                where: {id},
+                data: update
+            })
+
+            return true
+        }),
+    removePartner: protectedProcedure.input(z.object({id: z.string().nonempty()})).mutation(async ({input, ctx}) => {
+            return await ctx.prisma.partner.delete({
+                where: {
+                    id: input.id
+                }
+            })
+        }),
 })
