@@ -5,6 +5,7 @@ import { useRouter } from "next/router"
 import { useState } from "react";
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { ButtonActivator } from "~/components/ButtonActivator";
+import PartnerAttentions from "~/components/Attentions/PartnerAttentions";
 import { api } from "~/utils/api"
 
 type Inputs = {
@@ -63,6 +64,7 @@ export default AuthedLayout(function ShowPartner() {
                         />
                 </CardActions>
             </Card>
+            <PartnerAttentions />
         </>
     )
 })
