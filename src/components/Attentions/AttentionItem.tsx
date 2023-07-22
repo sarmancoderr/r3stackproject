@@ -3,13 +3,25 @@ import { Attention } from "@prisma/client";
 import dayjs from 'dayjs';
 import { ButtonActivator } from "../ButtonActivator";
 import { api } from "~/utils/api";
+import { AttentionEditor } from "./AttentionEditor";
+import { useRouter } from "next/router";
 
 const CLOSE_REMOVE_ATTENTION_MODAL_EVENT = 'closeRemoveAttentionModal'
+const CLOSE_UPDATE_ATTENTION_MODAL_EVENT = 'closeUpdateAttentionModal'
 
 export const AttentionItem: React.FC<{ attention: Attention }> = ({ attention }) => {
+    const router = useRouter()
+    const utils = api.useContext()
     const removeAttention = api.attentions.removeAttention.useMutation({
         onSuccess() {
             document.body.dispatchEvent(new CustomEvent(CLOSE_REMOVE_ATTENTION_MODAL_EVENT))
+            utils.attentions.attentionsOfPartner.invalidate()
+        }
+    })
+    const updateAttention = api.attentions.updateAttention.useMutation({
+        onSuccess() {
+            document.body.dispatchEvent(new CustomEvent(CLOSE_UPDATE_ATTENTION_MODAL_EVENT))
+            utils.attentions.attentionsOfPartner.invalidate()
         }
     })
 
@@ -22,12 +34,21 @@ export const AttentionItem: React.FC<{ attention: Attention }> = ({ attention })
             <CardActions>
                 <ButtonActivator
                     Activator={({ handleOpen }) => <Button onClick={handleOpen} disableElevation variant="contained">Editar</Button>}
-                    ContentButton={({ handleClose }) => (
-                        <>
-                            <Typography>Contenido del modal</Typography>
-                            <Button onClick={handleClose}>Cerrar</Button>
-                        </>
-                    )}
+                    ContentButton={({ handleClose }) => {
+                        document.body.addEventListener(CLOSE_UPDATE_ATTENTION_MODAL_EVENT, handleClose)
+                        return (
+                            <AttentionEditor
+                                initialValues={attention}
+                                handleSubmit={(input) => {
+                                    updateAttention.mutate({
+                                        ...input,
+                                        dateAttention: dayjs(input.dateAttention).format('YYYY-MM-DD'),
+                                        attentionId: attention.id
+                                    })
+                                }}
+                            />
+                        )
+                    }}
                 />
                 <ButtonActivator
                     Activator={({ handleOpen }) => <Button onClick={handleOpen} disableElevation variant="contained" color="error">Eliminar</Button>}

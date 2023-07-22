@@ -2,17 +2,10 @@ import { Toolbar, Typography, TableContainer, Table, TableBody, Paper, Menu, Men
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import { useRouter } from "next/router"
-import { useState } from "react";
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { ButtonActivator } from "~/components/ButtonActivator";
 import PartnerAttentions from "~/components/Attentions/PartnerAttentions";
 import { api } from "~/utils/api"
-
-type Inputs = {
-    name: string,
-    surname: string,
-    dni: string,
-}
 
 export default AuthedLayout(function ShowPartner() {
     const router = useRouter()

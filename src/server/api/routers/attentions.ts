@@ -24,6 +24,18 @@ export const attentionsRouter = createTRPCRouter({
             }
         })
     }),
+    updateAttention: protectedProcedure.input(z.object({attentionId: z.string(), dateAttention: z.string(), comment: z.string()}))
+        .mutation(async ({ctx, input}) => {
+            const {attentionId, ...update} = input
+            await ctx.prisma.attention.update({
+                where: {id: attentionId},
+                data: {
+                    ...update,
+                    dateAttention: new Date(input.dateAttention).toISOString()
+                }
+            })
+            return true
+        }),
     removeAttention: protectedProcedure.input(z.object({attentionId: z.string()})).mutation(async ({input, ctx}) => {
         await ctx.prisma.attention.delete({
             where: {id: input.attentionId}

@@ -1,17 +1,12 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { AuthedLayout } from "~/Layouts/AuthedLayout"
 import { useForm, type SubmitHandler } from "react-hook-form"
 import { api } from "~/utils/api"
 import { useRouter } from "next/router"
 import { Alert, Backdrop, Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material"
 import Head from "next/head"
+import { Partner } from "@prisma/client"
 
-type Inputs = {
-    name: string,
-    surname: string,
-    dni: string,
-}
+type Inputs = Omit<Partner, 'id'>
 
 export default AuthedLayout(function AddPartner() {
     const router = useRouter()

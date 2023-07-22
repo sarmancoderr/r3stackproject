@@ -5,12 +5,9 @@ import { useRouter } from "next/router"
 import { Alert, Backdrop, Box, Button, CircularProgress, Grid, TextField, Typography } from "@mui/material"
 import Head from "next/head"
 import { useEffect } from "react"
+import { Partner } from "@prisma/client"
 
-type Inputs = {
-    name: string,
-    surname: string,
-    dni: string,
-}
+type PartnerInput = Omit<Partner, 'id'>
 
 export default AuthedLayout(function AddPartner() {
     const router = useRouter()
@@ -26,7 +23,7 @@ export default AuthedLayout(function AddPartner() {
         register,
         handleSubmit,
         setValue,
-    } = useForm<Inputs>()
+    } = useForm<PartnerInput>()
 
     useEffect(() => {
         if (partner.data !== undefined) {
@@ -37,7 +34,7 @@ export default AuthedLayout(function AddPartner() {
         }
     }, [partner.data])
 
-    const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const onSubmit: SubmitHandler<PartnerInput> = (data) => {
         console.log('MUTANDO', data)
         mutate({
             ...data,
