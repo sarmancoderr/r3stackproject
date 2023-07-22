@@ -50,7 +50,7 @@ export default AuthedLayout(function ShowPartner() {
                     <Button onClick={() => router.push(`/partners/${router.query.id}/edit`)} disableElevation variant={'contained'}>Editar</Button>
                     <ButtonActivator
                         Activator={({handleOpen}) => <Button variant="contained" color="error" disableElevation onClick={() => handleOpen()}>Eliminar</Button>}
-                        ContentButton={({handleClose}) => (
+                        ContentButton={() => (
                             <>
                                 <Typography sx={{textAlign: 'center'}} variant="h6">¿Estas seguro que deseas eliminar el socio?</Typography>
                                 <Button color="error" onClick={() => {

@@ -7,7 +7,10 @@ const config = {
     project: path.join(__dirname, "tsconfig.json"),
   },
   extends: ["next/core-web-vitals"],
-  rules: {},
+  rules: {
+    'no-undef': "warn",
+    "no-unused-vars": 'warn'
+  },
 };
 
 module.exports = config;
