@@ -47,7 +47,9 @@ export default function PartnerAttentions () {
                     )}
                 />
             </Box>
-            {attentionList.data.map((a) => <AttentionItem attention={a} key={a.id} />)}
+            <Box sx={{marginTop: '20px'}}>
+                {attentionList.data.map((a) => <AttentionItem attention={a} key={a.id} />)}
+            </Box>
         </>
     )
 }
